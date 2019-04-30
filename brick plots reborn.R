@@ -21,7 +21,7 @@ range01 <- function(x) {
 
 data_set = apply(data_set, 2, range01) # applying scale function
 data_set = as.data.frame(data_set)
-k.max <- 30
+k.max <- length(all_data[1,])-1
 data <- data_set
 wss <- sapply(1:k.max, function(k) {
   kmeans(data, k)$tot.withinss
