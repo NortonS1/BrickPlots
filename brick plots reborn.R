@@ -36,7 +36,7 @@ plot(
   xlab = "Number of clusters K",
   ylab = "Total within-clusters sum of squares"
 ) # plotting elbow plot validation
-k = 3 #manually assign K based on elbow plot
+k = 5 #manually assign K based on elbow plot
 km = kmeans(data, k) #re-run Kmeans with selected K
 cluster_length = length(km$cluster[which(km$cluster == 1)])
 num_parameters = length(data_set[1,])
@@ -125,7 +125,7 @@ place_brick <- function(a, b, width, height, cols) {
        b,
        width,
        height,
-       col = alpha(palette_2[cols], 0.8),
+       col = alpha(palette_2[cols], 0.6),
        border = NA)
 }
 
