@@ -39,21 +39,23 @@ plot(
 k = 3 #manually assign K based on elbow plot
 km = kmeans(data, k) #re-run Kmeans with selected K
 cluster_length = length(km$cluster[which(km$cluster == 1)])
-
+num_parameters = length(data_set[1,])
 # use km$cluster to define colours
-broad_colours = km$cluster*100
-broad_colours = as.data.frame(broad_colours) #defining clusters as a colour
+broad_colours <<- km$cluster*100
+broad_colours <<- as.data.frame(broad_colours) #defining clusters as a colour
 
 cluster_types = unique(broad_colours)
 number_clusters = length(cluster_types$broad_colours)
-palette_2 = magma((100*(number_clusters+1))) #defining palette
+palette_2 = inferno((100*(number_clusters+1))) #defining palette
 
 for(cluster_group in cluster_types$broad_colours) {
   iteration = 1
   name = cluster_group
   for (i in 1:length(broad_colours$broad_colours)) {
     if (broad_colours$broad_colours[i] == name) {
-      broad_colours$broad_colours[i] <<- broad_colours$broad_colours[i] + (as.integer(60 / length(markers)) * iteration) 
+      temp_colour_label <- broad_colours$broad_colours[i]
+      print(broad_colours$broad_colours[i])
+      broad_colours$broad_colours[i] <- temp_colour_label + (as.integer(60 / (num_parameters/k)) * iteration) 
       iteration = iteration + 1
     }
   }
