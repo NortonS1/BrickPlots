@@ -91,8 +91,9 @@ all_data <- read.csv(phe_file)
 print("cluster data assigned")
 
 #scaling data
-scaled_data <- apply(all_data[,-1], 2, scale)
-scaled_data = scaled_data
+scaled_data <- all_data[,-1]
+# scaled_data <- apply(all_data[,-1], 2, scale)
+scaled_data = as.matrix(scaled_data)
 markers <- colnames(scaled_data)
 
 #defining functions
@@ -137,7 +138,7 @@ for (cluster in 1:length(scaled_data[, 1])) {
   print(paste("plotting cluster", cluster, sep = " "))
   values = (scaled_data[cluster,])
   for (i in 1:length(values)) {
-    if (values[i] < 0) {
+    if (values[i] <= 1) {
       values[i] <- 0
     }
   }
@@ -148,7 +149,7 @@ for (cluster in 1:length(scaled_data[, 1])) {
   broad_colours = as.data.frame(broad_colours)
   rownames(broad_colours) = rownames(values)
   values = cbind(values, colours, x, y,broad_colours)
-
+  
   positions <<- matrix(data = NA, length(scaled_data[1,]), 4)
   positions[1,] = c(0, 0, 0, 0)
   test_box <<- matrix(data = NA, 1, 4)
@@ -165,7 +166,7 @@ for (cluster in 1:length(scaled_data[, 1])) {
     edge = sqrt(values[i, 1]) * (((range(x)[2]*100)-(range(x)[1]*100))/20)
     make_brick(edge = edge, FALSE, i = i)
     Number_bricks <<- colSums(!is.na(positions))[1]
-
+    
     if ((test_box[3] - test_box[1]) >= 0.6*(((range(x)[2]*100)-(range(x)[1]*100))/20)) {
       place_brick(test_box[1], test_box[2], test_box[3], test_box[4], values[i, 5])
       center_x = (test_box[1] + test_box[3]) / 2
@@ -177,5 +178,3 @@ for (cluster in 1:length(scaled_data[, 1])) {
     }
   }
 }
-
-
