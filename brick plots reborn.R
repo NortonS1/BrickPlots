@@ -37,6 +37,7 @@ plot(
   ylab = "Total within-clusters sum of squares"
 ) # plotting elbow plot validation
 k = 5 #manually assign K based on elbow plot
+set.seed(1)
 km = kmeans(data, k) #re-run Kmeans with selected K
 cluster_length = length(km$cluster[which(km$cluster == 1)])
 num_parameters = length(data_set[1,])
